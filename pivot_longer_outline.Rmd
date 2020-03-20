@@ -2,7 +2,9 @@
 title: "Baker Sample Lesson"
 author: "David John Baker"
 date: "20/03/2020"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ## Lesson Outline
@@ -26,7 +28,7 @@ output: html_document
 
 #### General Background
 
- Jason is a professor of social sociences at a state university. He is very knowledgeable about all things statistics and research and even completed a prestigious post-doc position before starting his current job. While he has mainly used the tools his discipline has used the past twenty years, his current graduate students want to learn R so that they can be competitive on any job market once they graduate. They have never programmed before.
+Jason is a professor of social sociences at a state university. He is very knowledgeable about all things statistics and research and even completed a prestigious post-doc position before starting his current job. While he has mainly used the tools his discipline has used the past twenty years, his current graduate students want to learn R so that they can be competitive on any job market once they graduate. They have never programmed before.
 
 #### Relevant Experience
 
@@ -76,7 +78,7 @@ If the learner votes **D**, the learner has correctly identified the answer.
 
 
 This Parson Problem will be given after the `pivot_longer()` function is introduced.
-At this point they were introduced to the *FOUR* arguments needed to take a wide dataframe and make it long.
+At this point they were introduced to the **three** arguments needed to take a wide dataframe and make it long.
 Here the learner needs to transfer the model the just saw in the example and apply it exactly as they just learned to a new set of data. 
 
 Based on what we learned previously, take the next 3-5 minutes to look at this new dataset and fill in the blanks provided so that when you run this chunk of code, the shape of this new dataset matches the shape from our previous example.
