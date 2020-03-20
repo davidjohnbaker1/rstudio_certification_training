@@ -1,0 +1,174 @@
+---
+title: "Fake Test "
+author: "David John Baker"
+date: "02/03/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Question One 
+
+```{r}
+library(tidyverse)
+
+at_health_facilities <- read_csv("data/at_health_facilities.csv")
+
+at_health_facilities
+
+```
+
+* How Many Countries are reported in the dataset?
+
+```{r}
+
+at_health_facilities %>%
+  select(iso3) %>%
+  distinct() %>%
+  summarise(n = n())
+
+```
+
+* What is the difference between the minimum and maximum year with valid data for each country?
+
+```{r}
+# 
+
+at_health_facilities %>%
+  rename(age_15_17 = `age 15-17`,
+         age_20_34 = `age 20-34`) %>%
+  mutate(age_20_34 = as.double(age_20_34)) %>%
+  filter(age_15_17 != is.na(age_15_17) | age_20_34 != is.na(age_20_34)) %>%
+  group_by(iso3) %>%
+  summarise(max_year = max(year), min_year = min(year)) %>%
+  mutate(year_diff = max_year - min_year) %>%
+  arrange(-year_diff)
+
+```
+
+* How many countries reported data in 3 or more years? 
+
+```{r}
+at_health_facilities %>%
+  rename(age_15_17 = `age 15-17`,
+         age_20_34 = `age 20-34`) %>%
+  mutate(age_20_34 = as.double(age_20_34)) %>%
+  filter(age_15_17 != is.na(age_15_17) | age_20_34 != is.na(age_20_34)) %>%
+  group_by(iso3) %>%
+  summarise(number_iso3_entries = n()) %>%
+  filter(number_iso3_entries >= 3) 
+
+```
+ 
+* Which countries reported 100% incidence for at least one year in either age group?
+ 
+```{r}
+at_health_facilities %>%
+  rename(age_15_17 = `age 15-17`,
+         age_20_34 = `age 20-34`) %>%
+  mutate(age_20_34 = as.double(age_20_34)) %>%
+  filter(age_15_17 != is.na(age_15_17) | age_20_34 != is.na(age_20_34)) %>%
+  filter(age_15_17 == 100 | age_20_34 == 100) %>%
+  select(iso3) %>%
+  distinct()
+
+```
+
+## Question Three
+
+> Describe what columns a tidy layout for this data would have and why.
+
+In order for this data to be tidy, each variable needs to form a column and each separate observation as a row.
+In this setting, each column does have some variable information there, but there are two pieces of info.
+The first is the year, the second is if it is an estimation, high, or low value.
+Further, the `>- 95%` has meaning in addition to just the number itself and should be accounted for. 
+
+> Write a function that takes the name of a file containing this table as input and returns a tidy version of the table.
+The function should replace all - and >95% values with NA.
+The body of the function may contain one or more pipelines and may create temporary or intermediate variables, but may not contain any loops.
+
+```{r}
+hiv <- read_csv("data/infant_hiv.csv")
+
+# First melt entire dataframe to get columns and values together, then separate out the column info. 
+
+hiv %>%
+  pivot_longer(-ISO3, names_to = "year", values_to = "percent") %>%
+  separate(year, c("year","label")) %>%
+  mutate(year = as.integer(year)) %>% 
+  mutate(percent = str_remove_all(string = percent, pattern = "-")) %>%
+  mutate(percent = str_remove_all(string = percent, pattern = ">95%")) %>%
+  mutate(percent = str_remove_all(string = percent, pattern = "%")) %>%
+  mutate(percent = as.integer(percent)) 
+
+
+clean_hiv_table <- function(hiv_table) {
+  hiv_table %>%
+    pivot_longer(-ISO3, names_to = "year", values_to = "percent") %>%
+    separate(year, c("year", "label")) %>%
+    mutate(year = as.integer(year)) %>%
+    mutate(percent = str_remove_all(string = percent, pattern = "-")) %>%
+    mutate(percent = str_remove_all(string = percent, pattern = ">95%")) %>%
+    mutate(percent = str_remove_all(string = percent, pattern = "%")) %>%
+    mutate(percent = as.integer(percent))
+  
+}
+
+clean_hiv_table(hiv)
+
+```
+
+That took ten minues ! ]
+
+
+## Plot Re-Creation
+
+The file ranking.csv contains two columns:
+
+The ID of an item being rated.
+A rating, which is one of “negative”, “positive”, “indifferent”, or “wtf” (meaning the respondent didn’t understand the question).
+There are multiple ratings for each item.
+
+The plot below shows this data:
+
+Each dot represents one item i.
+The size of the circles shows the total number of ratings for item i.
+The X coordinate for item i is the percentage of ratings for that item that are “negative”.
+The Y coordinate for item i is the percentage of ratings for that item that are “positive”.
+The regression line is created using the ‘lm’ method.
+
+```{r}
+ranking <- read_csv("data/ranking.csv")
+
+ranking %>%
+  group_by(item)
+
+# 284 total items 
+
+ranking %>%
+  count(item) %>%
+  ggplot(aes(x = reorder(item,n), y = n)) +
+  geom_bar(stat = "identity") + 
+  coord_flip()
+
+
+ranking %>%
+  count(item) -> count_table 
+
+ranking %>%
+  group_by(item, rank) %>%
+  summarise(counts = n()) %>%
+  mutate(per_item_total = sum(counts)) %>%
+  mutate(relative_freq = counts/per_item_total) %>%
+  filter(rank == "positive" | rank == "negative") %>%
+  select(item, rank, relative_freq) %>% 
+  pivot_wider(names_from = rank, values_from = relative_freq) %>%
+  left_join(count_table, by = "item") %>%
+  ggplot(aes(y = positive, x = negative, size = n, alpha = n)) +
+  geom_point() +
+  geom_smooth(method = "lm") 
+  
+
+```
+
+
