@@ -47,7 +47,7 @@ He is currently in the middle of negotiating how his department is trying to mov
 
 ## Concept Map 
 
-![Concept Map](img/concept_map.png)
+![Concept Map](img/pivot_longer_concept_map.png)
 
 ## Formative Assessments
 
