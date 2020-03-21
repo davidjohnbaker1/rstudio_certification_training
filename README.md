@@ -5,8 +5,8 @@ This repository contains the materials for David John Baker's [RStudio Instructo
 ## Materials
 
 * [Slides](https://docs.google.com/presentation/d/1MFstJ3qFF1kK5dHJubn7KsPb2kcPSmuLnvHSP3QiFEA/edit?usp=sharing)
-* [Outline](guides/pivot_longer_outline.Rmd)
-* [Post Lesson Script](guides/pivot_longer_script.Rmd)
+* [Pre-Lesson Materials](guides/pivot_longer_outline.pdf)
+* [Script](guides/pivot_longer_script.Rmd)
 * [Lesson Notebook](guides/code_along.Rmd)
 
 ![Concept Map](img/pivot_longer_concept_map.png)

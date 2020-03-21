@@ -3,18 +3,16 @@ title: "Baker Sample Lesson"
 author: "David John Baker"
 date: "20/03/2020"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
-
-## Lesson Outline
 
 ## Learner Persona 
 
 #### General Background
 
 Jason is a undergradaute student in social sociences at a state university. 
-He is very knowledgeable about all things statistics and research and even completed a a summer research project in the lab of someone he might want to apply to do a PhD with. 
+He is very knowledgeable about all things statistics and research and even completed a summer research project in the lab of someone he might want to apply to do a PhD with. 
 While he has mainly used the tools in his classes likes SPSS and Excel to do data analysis, he knows he wants to learn R to increase his chances of getting into a grad program he likes, but more importantly to make his job as a research assistant easier. 
 
 #### Relevant Experience
@@ -34,11 +32,12 @@ Jason is a smart student, but is easily distracted.
 He works best when lectures are short, to the point, and can try things out on his own.
 He'd rather do a lot of small examples to understand a concept, rather than one big one.
 
-
+\pagebreak
 ## Concept Map 
 
-![Concept Map](img/pivot_longer_concept_map.png)
+![Concept Map](../img/pivot_longer_concept_map.png)
 
+\pagebreak
 ## Formative Assessments
 
 ### Formative Assessment One: Multiple Choice Question
@@ -49,29 +48,28 @@ The question was designed so that the learner is not able to use any sort of pro
 
 Given the dataset below, which of the following choices best describes the current state of the data using terminology we just learned.
 
-- A. The dataset is wide and tidy
-- B. The dataset is long and tidy
-- C. The dataset is wide and not tidy
-- D. The dataset is long and not tidy.
+* A. The dataset is wide and tidy
+* B. The dataset is long and tidy
+* C. The dataset is wide and not tidy
+* D. The dataset is long and not tidy.
 
-> Find Dataset that is long and almost tidy 
+![MCQ](../img/mcq.png)
 
-If the learner votes **A**, the learner is struggling with both the concept of wide and tidy data. The teacher should attempt to explain the concept using another approach.
-If the learner votes **B**, the learner understands what is meant by the shape of the data, but needs to be refreshed on what is meant by tidy so that they are not caught later by a problem they did not anticipate.
-If the learner votes **C**, the learner is still struggling with the concept of the shape of a dataset, but knows that the cells are not in the format they should be.
-If the learner votes **D**, the learner has correctly identified the answer.  
-
+If the learner votes **A**, the learner correctly identifies the shape of the data, but does not realise that the `Month` columns are actually names of a varible that they could perform some sort of calculation on.
+If the learner votes **B**, the learner does not understand what it means for data to be wide/long.
+If the learner votes **C**, the learner has correctly identified the answer. 
+If the learner votes **D**, the learner does not understand both the shape and concept of tidy.  
 
 ### Formative Assessment Two: Parson Problem 
 
 This Parson Problem will be given after the `pivot_longer()` function is introduced.
-At this point they were introduced to the **three** arguments needed to take a wide dataframe and make it long.
+At this point they were introduced to the **four** arguments needed to take a wide dataframe and make it long.
 Here the learner needs to transfer the model the just saw in the example and apply it exactly as they just learned to a new set of data. 
 
 Based on what we learned previously, take the next 3-5 minutes to look at this new dataset and fill in the blanks provided so that when you run this chunk of code, the shape of this new dataset matches the shape from our previous example.
 
 ```{r}
-student_data
+#student_data
 
 # pivot_longer(data = ______ , cols = _______, names_to = ______, values_to = ______)
 
