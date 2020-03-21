@@ -1,0 +1,16 @@
+participant_number,timepoints,ldl
+1,ldl_time_1,99
+1,ldl_time_2,104
+1,ldl_time_3,95
+2,ldl_time_1,176
+2,ldl_time_2,180
+2,ldl_time_3,190
+3,ldl_time_1,120
+3,ldl_time_2,124
+3,ldl_time_3,122
+4,ldl_time_1,188
+4,ldl_time_2,210
+4,ldl_time_3,201
+5,ldl_time_1,132
+5,ldl_time_2,144
+5,ldl_time_3,135

@@ -5,46 +5,72 @@ date: "20/03/2020"
 output: html_document
 ---
 
-!! Change Learner Persona to Undergrad 
+* Title Slide 
+
+But before getting started, let's import what we need today.
+
+```{r, echo=TRUE, results='hide'}
+# Import Needed Data and Libraries
+library(tidyverse)
+library(knitr)
+study_data <- read_csv("../data/study_data.csv")
+study_data_long <- read_csv("../data/study_data_long.csv")
+student_data <- read_csv("../data/student_data.csv")
+store_data <- read_csv("../data/store_data.csv")
+```
 
 Today we continue learning about the idea of [tidy data](https://r4ds.had.co.nz/tidy-data.html).
 We'll build on some of concepts from last time so you can start to manipulate some of your own datasets and change the way they are organised with only a few lines of code.
 
 ## The Shape of Data 
 
-How many people here have often heard that your brain is a computer?
+* Slide of Brain Pic as computer 
 
-* Engages people
+How many people here have often heard that your brain is a computer?
 
 This is partially true based on how you define computation and how far you are willing to stretch the metaphor, but even though people say your brain _computes_ things, human brains do not work exactly like the computer that's sitting in front of you. 
 
 If your brain and computers worked exactly the same, you'd imagine that both you and your computer would always want things in the same format to make it easier for both parties involved.
-As psychologists we know this isnt't always the case.
+If you've worked with computers a lot before, you may  know this isnt't always the case.
 
 In practice (and reality), humans and computers often need to be flexible in how they think about things.
 What works well for one situation for a brain or a computer might not work well in another.
 
-We see this all the time in reserach.
-
 Take a look at the following table of data.
 
-* Example of data in wide format 
+* Table in Slides 
 
-A scientist is running a study where they need to collect data at multiple timepoints on a smoking cessation study and need to track number of cigarrets smoked and need to enter those values in by hand or maybe a teacher needs to record daily grades, this is a way that is familiar to many people who work with spreadsheets.
+```{r}
+kable(study_data)
+```
+
+A scientist is running a study where they need to collect data at multiple timepoints on a study tracking someone's LDL (bad cholesterol) and need to enter those values in by hand or maybe a teacher needs to record daily grades, this is a way that is familiar to many people who work with spreadsheets.
 
 The problem is that when the data is structured like this, in order to do some sort of calculation like count the total number of cigarettes smoked or the average grade per student, most of the software we have seen thus far needs the data to operate over columns as opposed to rows. 
+
+* Table with rows highlighted 
 
 For example, look at this new data frame.
 It contains the exact same data as the table before, but has a different shape to it.
 
-* Long Data Frame
+```{r}
+kable(study_data_long)
+```
+
+* Click to show columns highlighted
 
 Both shapes of data are tidy but one is probably easier to enter data into and the other is in a format that works well with a lot of software that makes our jobs easier.
 Often we need to change our data from one of these shapes to the other.
 And imporantly, each of these shapes of data has a specific name.
 
+## New Volcabulary
+
 When some of the columns of a dataset have certain values, rather than the explicit name of a variable, the data is called *wide data*.
 When an observation is scattered across many rows, the data is called *long data*. 
+
+* Slide with half def 
+
+* Slide with defs and question 
 
 Take a second to talk with your partner and answer this question:
 
@@ -57,85 +83,110 @@ Given the dataset shown here, which of the following choices best describes the 
 
 ## Pivoting 
 
-Great, now that we're on the same page, let's learn how to change between the two.
+Now that we're on the same page, let's learn how to change between the two.
 When you want to change the shape of data in the way that we just talked about in the tidyverse, you use the `pivot` functions.
 If you have wide data and want to make it long, you use `pivot_longer()`; if you have long data and want to make it wide, you use `pivot_wider()`.
-We're going to first look at `pivot_longer()` then in another lesson can explore `pivot_wider()`.
+We're going to first look at `pivot_longer()` then in another lesson we can explore `pivot_wider()`.
 
 If you are going to use `pivot_longer()`, we can assume that your data is in a wide format.
 Since your data is in a wide format we know that some of the column names are actually _values_ that look like variables.
+In order to get these as rows, we need to give our function four different arguments.
+
+## Four Arguments 
+
 There can be a lot of terms to keep track of here so let's start one by one.
 
-In general, the first argument for any `tidyverse` function is going to be the data we want to manipulate.
-Let's start with that:
+The first argument for any `tidyverse` function is going to be the data we want to manipulate.
+We should know what the structure of our data is before trying to change its shape!
+Let's start using our example from before. 
 
 ```{r}
-library(tidyverse)
-
-df 
-
-#pivot_longer(data = ,cols = ,names_to = ,values_to = )
+study_data
 ```
 
 
-In the example below from before, which of our columns here look like variables, but are really values?
+* In the example below from before, which of our columns here look like variables, but are really values?
 
-* Wide data from before
+> In this case, the it would be the columns ldl_time_1, ldl_time_2, and ldl_time_3
 
-We have now identified our columns that are hiding as variables but are really values.
+We have now identified our columns that are hiding as variables but are _really_ values that we might want to use in our analysis.
 Identifying columns that look like variables, but are really values is the first step in moving data from wide to format.
+
 If you remember this, you will remember that this is the second argument that the `pivot_longer()`  function takes `id_cols =`.
 The function `pivot_longer()` makes it easy for us and allows for us to use `select()` like notation to select out what columns we have identified.
 
-If you need a refresher on all the things `select()` can do, check that out [here]().
+If you need a refresher on all the things `select()` can do, check that out [here](https://dplyr.tidyverse.org/reference/select.html).
 
-Great, now that we have our data and identifed what columns are values hiding as variables, we can now tell `pivot_longer()` what we have found.
+Now that we have our data and identifed what columns are values hiding as variables, we can now tell `pivot_longer()` what we have found.
 We now need to tell `pivot_longer()` both what kind of data was in our column names as well as what kind of data is in the column with the value as a header.
-In our case here, the _____________.
 
 Let's fill that in with our example.
 
-```{r}
+* Note here that our `cols` argument works like select, so we can use the `:` operator to select consecutive columns.
+* Also be aware that the `names_to` and `values_to` arguments need to be `"charater"` arguments since you are creating the _names_ of your new columns.  
 
+```{r,eval=FALSE}
+pivot_longer(data = study_data, 
+             cols = ldl_time_1:ldl_time_3, 
+             names_to = "timepoints",
+             values_to = "ldl")
 ```
 
+Take notice of the fact that we have given the `names_to` argument what kind of data was in our columns.
+Take notice of the fact that we have given the `values_to` argument what kind of data lived was in the columns with values as headers. 
 
 We now have everything we need to move from wide data to long.
 Let's run this to see if it worked.
 
 ```{r}
-
+pivot_longer(data = study_data, 
+             cols = ldl_time_1:ldl_time_3, 
+             names_to = "timepoints",
+             values_to = "ldl")
 ```
 
 Great! 
 We've done it.
 
-Let's try another one as a group, but not full on.
+Let's try another one as a group.
 Take a look at this new data and see if you can fill in the blanks in order to get this new data from long format to wide.
+In this dataset we have data from a few different students and their daily grades from one week of the year.
+We want every row to contain the name of the student, the day of the week, and their grade.
+
+Remember to first uncomment the line so you can run it! 
 
 
 ```{r}
-# pivot_longer(df, cols = , names_to = , values_to = )
+student_data
 
+# pivot_longer(data = ______ , cols = _______, names_to = ______, values_to = ______)
 ```
 
-Again, nice work.
 
 To end, let's try one more, but this time I am only going to give you the dataframe and tell you that I want you to take this dataframe and make it longer!
+The data here contains sales of products from a family owned store over the past few months.
+Here we want to take the sales from the different months and make it so that we have a variable called month and a variable called number of sales. 
+There are a few other variables in there too, but just focus on the ones you want to pivot and `pivot_longer()` will take care of the rest. 
 
 ```{r}
-# df_3
+store_data
+
+# Your Code Here! 
+
 ```
 
 
-Great.
 We covered a lot of ground in the last 15 minutes.
 We reviewed the idea of tidy data and learned two new terms to describe the shape of data.
 What are they?
+
+> Wide and Long 
 
 We also looked at the first of two `pivot` functions, `pivot_longer()` which takes wide data and makes it long.
 The function `pivot_longer()` needs four arguments at miminum.
 What are they?
 
-Great, let's take a quick break, then do `pivot_wider()`.
+> Data, cols, names_to, values_to
+
+Great, let's take a quick break, then do `pivot_wider()`...
 
