@@ -1,0 +1,82 @@
+---
+title: "Learn to Pivot!"
+author: "David John Baker"
+date: "21/03/2020"
+output: html_document
+---
+
+Let's start by importing what we need for this lesson!
+
+```{r, echo=TRUE, results='hide'}
+# Import Needed Data and Libraries
+library(tidyverse)
+library(knitr)
+study_data <- read_csv("../data/study_data.csv")
+study_data_long <- read_csv("../data/study_data_long.csv")
+student_data <- read_csv("../data/student_data.csv")
+store_data <- read_csv("../data/store_data.csv")
+```
+
+Here's the data we're going to be working with.
+
+```{r}
+study_data
+```
+
+The same data, but in a different shape.
+
+```{r}
+study_data_long
+```
+
+The code needed to change data from wide to long. 
+
+```{r,eval=FALSE}
+pivot_longer(data = study_data, 
+             cols = ldl_time_1:ldl_time_3, 
+             names_to = "time points",
+             values_to = "ldl")
+```
+
+As a group!
+
+Take a look at this new data and see if you can fill in the blanks in order to get this new data from long format to wide.
+In this data set we have data from a few different students and their daily grades from one week of the year.
+We want every row to contain the name of the student, the day of the week, and their grade.
+
+Remember to first uncomment the line so you can run it! 
+
+
+```{r}
+student_data
+
+# pivot_longer(data = ______ , cols = _______, names_to = ______, values_to = ______)
+```
+
+To end, let's try one more, but this time I am only going to give you the data and tell you that I want you to take this data and make it longer!
+The data here contains sales of products from a family owned store over the past few months.
+Here we want to take the sales from the different months and make it so that we have a variable called month and a variable called number of sales. 
+There are a few other variables in there too, but just focus on the ones you want to pivot and `pivot_longer()` will take care of the rest. 
+
+```{r}
+store_data
+
+# Your Code Here! 
+
+```
+
+We covered a lot of ground in the last 15 minutes.
+We reviewed the idea of tidy data and learned two new terms to describe the shape of data.
+What are they?
+
+> ??? 
+
+We also looked at the first of two `pivot` functions, `pivot_longer()` which takes wide data and makes it long.
+The function `pivot_longer()` needs four arguments at minimum.
+What are they?
+
+> ???
+
+Let's take a quick break, then do `pivot_wider()`...
+
+

@@ -9,43 +9,31 @@ output:
 
 ## Lesson Outline
 
-1. Introduce Problem  ( 5 minutes )
-  - Tidy 
-  - Define Long
-  - Define Wide
-  - Formative on Definitions (Short)
-2. Introduce Program (10 minutes)
-  - Introduce Data 
-  - Ask if Long or Wide and Why 
-  - Introdce `pivot_longer()`
-  - Introduce arguments
-3. Cooperative, Guided Practice 
-  - Guess what output is going to be.
-  - Try same thing, but new data frame (Parson Problem, Longer) 
-  - If time, third dataset 
-
 ## Learner Persona 
 
 #### General Background
 
-Jason is a professor of social sociences at a state university. He is very knowledgeable about all things statistics and research and even completed a prestigious post-doc position before starting his current job. While he has mainly used the tools his discipline has used the past twenty years, his current graduate students want to learn R so that they can be competitive on any job market once they graduate. They have never programmed before.
+Jason is a undergradaute student in social sociences at a state university. 
+He is very knowledgeable about all things statistics and research and even completed a a summer research project in the lab of someone he might want to apply to do a PhD with. 
+While he has mainly used the tools in his classes likes SPSS and Excel to do data analysis, he knows he wants to learn R to increase his chances of getting into a grad program he likes, but more importantly to make his job as a research assistant easier. 
 
 #### Relevant Experience
 
-Jason has a PhD in his discipline, has programmed before, and mastery of all of the statistical procedures that he has to do on on normal basis. He has not thought too much about the shape that data has to be in in order to run the models he does in programs he is familiar with like SPSS or SAS, as he normally has just gotten an undergraduate or grad student to reconfigure the data by hand. He has hundreds of hours experience working in SPSS, Excel, and SAS and considers himself and expert in these programs.
-He has played with a bit of R and likes how the pipe operator works because it reminds him of learning bash as a teenager. 
+Jason is just finishing his undergraduate, has played with R before but always gives up, and has a good understanding of stats. 
+He is often asked to change datasets by hand by the PI that runs his lab, but knows there must be a better way. 
 He understands that data should one observation per row, one variable per column but doesn't refer to that as _tidy_ data. 
 
 #### Percieved Needs
 
-Jason has heard he needs to learn R and have to teach it in the coming year as his department is going to switch their curricula from SPSS to R. 
-He has nine or so months to do this and figures what better way to start than to learn how to manipulate some of his own data as to help his own research and work in something more familiar. 
-He figures, why not start by learning the tasks he often asks his students to do. 
-
+Jason wants to be able to apply what he is learning right away so that he can spend less time in the lab and more time with his friends in his last year of university.
+Ideally learning R will free up more time rather than make it a hobby or part of his identity.
+ 
 #### Special Considerations
 
-While Jason does have a lot of time until he has to teach this course, he does not have that much time every day to devote to learning R. 
-He is currently in the middle of negotiating how his department is trying to move some of their classes online due to a public health crisis and also needs to be home every day early in order to take care of his son.
+Jason is a smart student, but is easily distracted.
+He works best when lectures are short, to the point, and can try things out on his own.
+He'd rather do a lot of small examples to understand a concept, rather than one big one.
+
 
 ## Concept Map 
 
@@ -76,7 +64,6 @@ If the learner votes **D**, the learner has correctly identified the answer.
 
 ### Formative Assessment Two: Parson Problem 
 
-
 This Parson Problem will be given after the `pivot_longer()` function is introduced.
 At this point they were introduced to the **three** arguments needed to take a wide dataframe and make it long.
 Here the learner needs to transfer the model the just saw in the example and apply it exactly as they just learned to a new set of data. 
@@ -84,10 +71,28 @@ Here the learner needs to transfer the model the just saw in the example and app
 Based on what we learned previously, take the next 3-5 minutes to look at this new dataset and fill in the blanks provided so that when you run this chunk of code, the shape of this new dataset matches the shape from our previous example.
 
 ```{r}
+student_data
+
+# pivot_longer(data = ______ , cols = _______, names_to = ______, values_to = ______)
 
 ```
 
 
-## Slides and Notebooks
+## Outline
+
+1. Introduce Problem  ( ~5 minutes )
+  - Tidy 
+  - Define Long
+  - Define Wide
+  - Formative on Definitions (Short)
+2. Introduce Program (~ 7 minutes)
+  - Introduce Data 
+  - Ask if Long or Wide and Why 
+  - Introdce `pivot_longer()`
+  - Introduce arguments
+3. Cooperative, Guided Practice (~ 2 Min, if time) 
+  - Guess what output is going to be.
+  - Try same thing, but new data frame (Parson Problem, Longer) 
+  - If time, third dataset 
 
 

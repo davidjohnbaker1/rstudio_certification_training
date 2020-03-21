@@ -2,7 +2,9 @@
 title: "Learn to Pivot!"
 author: "David John Baker"
 date: "20/03/2020"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 * Title Slide 
@@ -20,7 +22,7 @@ store_data <- read_csv("../data/store_data.csv")
 ```
 
 Today we continue learning about the idea of [tidy data](https://r4ds.had.co.nz/tidy-data.html).
-We'll build on some of concepts from last time so you can start to manipulate some of your own datasets and change the way they are organised with only a few lines of code.
+We'll build on some of concepts from last time so you can start to manipulate some of your own data and change the way they are organised with only a few lines of code.
 
 ## The Shape of Data 
 
@@ -44,7 +46,7 @@ Take a look at the following table of data.
 kable(study_data)
 ```
 
-A scientist is running a study where they need to collect data at multiple timepoints on a study tracking someone's LDL (bad cholesterol) and need to enter those values in by hand or maybe a teacher needs to record daily grades, this is a way that is familiar to many people who work with spreadsheets.
+A scientist is running a study where they need to collect data at multiple time points on a study tracking someone's LDL (bad cholesterol) and need to enter those values in by hand or maybe a teacher needs to record daily grades, this is a way that is familiar to many people who work with spreadsheets.
 
 The problem is that when the data is structured like this, in order to do some sort of calculation like count the total number of cigarettes smoked or the average grade per student, most of the software we have seen thus far needs the data to operate over columns as opposed to rows. 
 
@@ -61,11 +63,11 @@ kable(study_data_long)
 
 Both shapes of data are tidy but one is probably easier to enter data into and the other is in a format that works well with a lot of software that makes our jobs easier.
 Often we need to change our data from one of these shapes to the other.
-And imporantly, each of these shapes of data has a specific name.
+And importantly, each of these shapes of data has a specific name.
 
-## New Volcabulary
+## New Vocabulary
 
-When some of the columns of a dataset have certain values, rather than the explicit name of a variable, the data is called *wide data*.
+When some of the columns of a data set have certain values, rather than the explicit name of a variable, the data is called *wide data*.
 When an observation is scattered across many rows, the data is called *long data*. 
 
 * Slide with half def 
@@ -74,12 +76,12 @@ When an observation is scattered across many rows, the data is called *long data
 
 Take a second to talk with your partner and answer this question:
 
-Given the dataset shown here, which of the following choices best describes the current state of the data using terminology we just learned.
+Take a look at the data set shown here, which of the following choices best describes the current state of the data using terminology we just learned.
 
-- A. The dataset is wide and tidy
-- B. The dataset is long and tidy
-- C. The dataset is wide and not tidy
-- D. The dataset is long and not tidy.
+- A. The data set is wide and tidy
+- B. The data set is long and tidy
+- C. The data set is wide and not tidy
+- D. The data set is long and not tidy.
 
 ## Pivoting 
 
@@ -117,7 +119,7 @@ The function `pivot_longer()` makes it easy for us and allows for us to use `sel
 
 If you need a refresher on all the things `select()` can do, check that out [here](https://dplyr.tidyverse.org/reference/select.html).
 
-Now that we have our data and identifed what columns are values hiding as variables, we can now tell `pivot_longer()` what we have found.
+Now that we have our data and identified what columns are values hiding as variables, we can now tell `pivot_longer()` what we have found.
 We now need to tell `pivot_longer()` both what kind of data was in our column names as well as what kind of data is in the column with the value as a header.
 
 Let's fill that in with our example.
@@ -150,7 +152,7 @@ We've done it.
 
 Let's try another one as a group.
 Take a look at this new data and see if you can fill in the blanks in order to get this new data from long format to wide.
-In this dataset we have data from a few different students and their daily grades from one week of the year.
+In this data set we have data from a few different students and their daily grades from one week of the year.
 We want every row to contain the name of the student, the day of the week, and their grade.
 
 Remember to first uncomment the line so you can run it! 
@@ -163,7 +165,7 @@ student_data
 ```
 
 
-To end, let's try one more, but this time I am only going to give you the dataframe and tell you that I want you to take this dataframe and make it longer!
+To end, let's try one more, but this time I am only going to give you the data and tell you that I want you to take this data and make it longer!
 The data here contains sales of products from a family owned store over the past few months.
 Here we want to take the sales from the different months and make it so that we have a variable called month and a variable called number of sales. 
 There are a few other variables in there too, but just focus on the ones you want to pivot and `pivot_longer()` will take care of the rest. 
@@ -183,7 +185,7 @@ What are they?
 > Wide and Long 
 
 We also looked at the first of two `pivot` functions, `pivot_longer()` which takes wide data and makes it long.
-The function `pivot_longer()` needs four arguments at miminum.
+The function `pivot_longer()` needs four arguments at minimum.
 What are they?
 
 > Data, cols, names_to, values_to
