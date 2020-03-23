@@ -29,20 +29,27 @@ The same data, but in a different shape.
 study_data_long
 ```
 
-The code needed to change data from wide to long. 
+Let's now look at the code needed to change data from wide to long.
+In order to do this, you will need to tell `pivot_longer()` *four* different arguments. 
+
+* data: what data are you working with?
+* cols: what are the columns that look like variables, but are really values?
+* names_to: What kind of data is living in those column headers?
+* values_to: What kind of values are living in those columns? I also like to think about this as what unit is the variable measured on? 
 
 ```{r,eval=FALSE}
-pivot_longer(data = study_data, 
-             cols = ldl_time_1:ldl_time_3, 
-             names_to = "time points",
-             values_to = "ldl")
+study_data
+
+# pivot_longer(data = ______ , cols = _______, names_to = ______, values_to = ______)
 ```
 
 As a group!
 
-Take a look at this new data and see if you can fill in the blanks in order to get this new data from long format to wide.
+Take a look at this new data and see if you can fill in the blanks in order to get this new data from wide format to long.
 In this data set we have data from a few different students and their daily grades from one week of the year.
 We want every row to contain the name of the student, the day of the week, and their grade.
+
+> Use the example above as a model if you get stuck. 
 
 Remember to first uncomment the line so you can run it! 
 
@@ -55,7 +62,7 @@ student_data
 
 To end, let's try one more, but this time I am only going to give you the data and tell you that I want you to take this data and make it longer!
 The data here contains sales of products from a family owned store over the past few months.
-Here we want to take the sales from the different months and make it so that we have a variable called month and a variable called number of sales. 
+Here we want to take the sales from the different months and make it so that we have a variable called `month` and a variable called number of `sales`. 
 There are a few other variables in there too, but just focus on the ones you want to pivot and `pivot_longer()` will take care of the rest. 
 
 ```{r}
