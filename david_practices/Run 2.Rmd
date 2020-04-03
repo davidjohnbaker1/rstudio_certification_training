@@ -1,0 +1,155 @@
+---
+title: "Practice 2 -- Faster"
+author: "David John Baker"
+date: "30/03/2020"
+output: html_document
+---
+
+
+The file `at_health_facilities.csv` contains a tidy dataset with four columns: 
+
+- The ISO3 code of the country that reported data. 
+- The year for which data was reported. 
+- The percentage of HIV-positive children born to HIV-positive mothers age 15–17. 
+- The percentage of HIV-positive children born to HIV-positive mothers age 20–34.
+
+Please answer the following questions:
+
+* How many countries reported data?
+* What is the difference between the minimum and maximum year with valid data for each country?
+* How many countries reported data in 3 or more years?
+* Which countries reported 100% incidence for at least one year in either age group?
+
+
+```{r}
+library(tidyverse)
+
+health <- read_csv("david_practices/data/at_health_facilities.csv")
+
+# How many countries reported data?
+health %>%
+  select(iso3) %>%
+  distinct() %>%
+  nrow()
+
+# What is the difference between the minimum and maximum year with valid data for each country?
+
+health %>%
+  mutate(`age 20-34` = na_if(`age 20-34`, "-")) %>%
+  mutate(`age 20-34` = as.double(`age 20-34`)) %>%
+  filter(!is.na(`age 20-34`)) %>%
+  group_by(iso3) %>%
+  mutate(max_year = max(year),
+         min_year = min(year)) %>%
+  mutate(diff = min_year - max_year) %>%
+  select(iso3, diff, `age 15-17`, `age 20-34`) %>%
+  distinct()
+  
+# How many countries reported data in 3 or more years?
+
+health %>%
+  group_by(iso3) %>%
+  select(iso3, year) %>%
+  summarise(n = n()) %>%
+  filter(n >= 3) %>%
+  nrow()
+
+# Which countries reported 100% incidence for at least one year in either age group?
+
+health %>%
+  mutate(`age 20-34` = na_if(`age 20-34`, "-")) %>%
+  mutate(`age 20-34` = as.double(`age 20-34`)) %>%
+  filter(`age 15-17` == 100 | `age 20-34` == 100) %>%
+  distinct(iso3) 
+
+# 20 Minutes! 
+```
+
+## Question 2
+
+* Done! 20 min done !
+
+## Question 3
+
+* Use `infant_hiv.csv` to tidy the data 
+
+Describe what columns a tidy layout for this data would have and why.
+Write a function that takes the name of a file containing this table as input and returns a tidy version of the table.
+The function should replace all - and >95% values with NA.
+The body of the function may contain one or more pipelines and may create temporary or intermediate variables, but may not contain any loops.
+
+1. Each column with the name like YEAR rating, needs be split up so there is both a year as a grouping variable as well as the rating next to it. Then each row will be tidy!
+
+* function takes name of file and spits out table 
+
+* [ ] replace all - and >95 with na
+* [ ] No loops, only pipes 
+
+```{r}
+infant <- read_csv("david_practices/data/infant_hiv.csv")
+
+clean_infant_hiv_table <- function(x){
+  if(!is.character(x)){
+    print("You need to pass the file name in as a string!")
+  }
+  infant <- read_csv(x)
+  infant %>%
+  pivot_longer(cols = `2009 est`:`2017 lo`, names_to = "year_rating", values_to = "rates") %>%
+  separate(col = year_rating, into = c("year","est")) %>%
+  mutate(rates = na_if(x = rates, "-")) %>%
+  mutate(rates = na_if(x = rates, ">95%")) %>%
+  mutate(rates = str_remove_all(string = rates, pattern = "%")) %>%
+  mutate(rates = as.integer(rates))
+}
+
+
+clean_infant_hiv_table("david_practices/data/infant_hiv.csv")  
+
+```
+# 45 minutes left 
+
+## Recreate this plot 
+
+```{r}
+ranking <- read_csv("david_practices/data/ranking.csv")
+
+ranking %>%
+  group_by(item) %>%
+  add_count(name = "ratings_for_item") %>%
+  ungroup(item) %>%
+  group_by(item, rank) %>%
+  add_count(name = "per_level") %>%
+  distinct() %>%
+  arrange(item, rank) %>%
+  mutate(total_ratio = per_level / ratings_for_item) %>%
+  filter(rank == "positive" | rank == "negative") %>% 
+  pivot_wider(names_from = rank, values_from = total_ratio) %>%
+  select(item, positive) -> positive_table 
+  
+ranking %>%
+  group_by(item) %>%
+  add_count(name = "ratings_for_item") %>%
+  ungroup(item) %>%
+  group_by(item, rank) %>%
+  add_count(name = "per_level") %>%
+  distinct() %>%
+  arrange(item, rank) %>%
+  mutate(total_ratio = per_level / ratings_for_item) %>%
+  filter(rank == "positive" | rank == "negative") %>% 
+  pivot_wider(names_from = rank, values_from = total_ratio) %>%
+  select(item, negative) -> negative_table   
+
+positive_table %>%
+  left_join(negative_table,by = "item")
+  
+  
+  ggplot(aes(x = negative, y = positive, size = ratings_for_item)) +
+  geom_point()
+  
+
+```
+
+
+
+
+
