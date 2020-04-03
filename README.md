@@ -4,7 +4,7 @@ This repository contains the materials for David John Baker's [RStudio Instructo
 
 ## Certificates
 
-![Tidyverse Certificate](img/baker+david+tidyverse.pdf)
+![Tidyverse Certificate](img/tidyverse.png)
 
 ## Materials
 
